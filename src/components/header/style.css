@@ -10,6 +10,24 @@
 	z-index: 50;
 }
 
+.light img {
+	margin-top: 16px;
+	cursor: pointer;
+	background: #00abff;
+	float: right;
+	margin-right: 13px;
+	margin-left: 16px;;
+}
+
+.dark img {
+	margin-top: 16px;
+	cursor: pointer;
+	background: #ff6000;
+	float: right;
+	margin-right: 13px;
+	margin-left: 16px;;
+}
+
 .header h1 {
 	float: left;
 	margin: 0;
@@ -45,4 +63,17 @@
 
 .header nav a.active {
 	background: rgba(0,0,0,0.4);
+}
+.counterSpan {
+	width: 20px;
+    background: red;
+    position: absolute;
+    padding: 2px 3px;
+    color: white;
+    height: 20px;
+    border-radius: 16px;
+	right: 100px;
+	top: 2px;
+	font-size: 12px;
+	text-align: center;
 }

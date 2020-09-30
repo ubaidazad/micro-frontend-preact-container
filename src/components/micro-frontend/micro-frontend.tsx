@@ -1,4 +1,5 @@
 import { Component, FunctionalComponent, h } from "preact";
+import dispatchEvent, { eventsToDispatch } from '../../utils/events';
 
 interface MicroFrontendProps {
     name: string;
@@ -16,16 +17,6 @@ class MicroFrontend extends Component<MicroFrontendProps> {
             return;
         }
 
-        // fetch(`${host}/asset-manifest.json`)
-        //     .then(res => res.json())
-        //     .then(manifest => {
-        //         const script = document.createElement("script");
-        //         script.id = scriptId;
-        //         script.src = `${host}${manifest["main.js"]}`;
-        //         script.onload = this.renderMicroFrontend;
-        //         document.head.appendChild(script);
-        //     });
-
         const script = document.createElement("script");
         script.id = scriptId;
         script.src = `${host}/${"bundle.js"}`;
@@ -40,9 +31,10 @@ class MicroFrontend extends Component<MicroFrontendProps> {
         const { name } = this.props;
 
         const history = (window as any).customHistory;
-
+        //we can pass props from here as well, like we are passing history
         (window as any)[`render${name}`](`${name}-container`, history);
         // E.g.: window.renderBrowse('browse-container', history);
+        dispatchEvent(eventsToDispatch.MFE_LOADED, {name})
     }
 
     /**
@@ -52,6 +44,7 @@ class MicroFrontend extends Component<MicroFrontendProps> {
         const { name } = this.props;
 
         (window as any)[`unmount${name}`](`${name}-container`);
+        dispatchEvent(eventsToDispatch.MFE_UNLOADED, {name})
     }
 
     render() {

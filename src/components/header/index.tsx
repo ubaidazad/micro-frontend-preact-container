@@ -1,20 +1,32 @@
 import { FunctionalComponent, h } from "preact";
+import { Link } from "preact-router";
+import { useState } from "preact/hooks";
+import dispatchEvent, { eventsToDispatch } from "../../utils/events";
 import * as style from "./style.css";
 
-const Header: FunctionalComponent = () => {
+interface HeaderProps {
+    counter: any;
+}
+
+const Header: FunctionalComponent<HeaderProps> = (props) => {
+
+
+    const isBPAY = window.location.pathname.includes('bpay');
+
+    const onSettingsClick = (color: string) => {
+        dispatchEvent(eventsToDispatch.HOST_THEME_CHANGED, {color});
+    }
+
     return (
         <header class={style.header}>
-            <h1>Preact App</h1>
+            <a href="/"><h1>Host Preact App</h1></a>
+            <span className={style.light} onClick={() => {onSettingsClick('#00abff')}}><img src='../../assets/icons/settings.svg'></img></span>
+            <span className={style.dark} onClick={() => {onSettingsClick('#ff6000')}}><img src='../../assets/icons/settings.svg'></img></span>
             <nav>
-                {/* <Link activeClassName={style.active} href="/">
-                    Home
-                </Link>
-                <Link activeClassName={style.active} href="/profile">
-                    Me
-                </Link>
-                <Link activeClassName={style.active} href="/profile/john">
-                    John
-                </Link> */}
+                <a className={isBPAY ? style.active: ''} href="/bpay">
+                    BPAY
+                </a>
+                <span className={style.counterSpan}>{props.counter}</span>
             </nav>
         </header>
     );
